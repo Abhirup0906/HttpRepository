@@ -1,19 +1,19 @@
-﻿using HttpRepository._Contract;
+﻿using HttpRepository.Contract;
+using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Newtonsoft.Json;
 
 namespace HttpRepository.Service
 {
-    internal class BaseRepository : IBaseHttpRepository
+    public class BaseRepository : IBaseHttpRepository
     {
         private readonly HttpClient _httpClient;
         protected BaseRepository(HttpClient client)
         {
             _httpClient = client;
-        }        
-        public Dictionary<string, string> HeaderProperties { get; set; }        
+        }
+        public Dictionary<string, string> HeaderProperties { get; set; }
         public string ContentType { get; set; } = "application/json";
 
         public async Task<bool> Delete<T>(T request, string requestUri)
@@ -36,7 +36,7 @@ namespace HttpRepository.Service
                 var responseMessage = await response.Content.ReadAsStringAsync();
                 return JsonConvert.DeserializeObject<U>(responseMessage);
             }
-            else return default(U); 
+            else return default(U);
         }
 
         public async Task<U> Post<T, U>(T request, string requestUri)
@@ -64,7 +64,7 @@ namespace HttpRepository.Service
 
         private void PopulateHeader()
         {
-            foreach(var element in HeaderProperties)
+            foreach (var element in HeaderProperties)
             {
                 _httpClient.DefaultRequestHeaders.Add(element.Key, element.Value);
             }

@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace HttpRepository._Contract
+namespace HttpRepository.Contract
 {
     public interface IBaseHttpRepository
-    {        
+    {
         string ContentType { get; set; }
         Dictionary<string, string> HeaderProperties { get; set; }
         Task<bool> Delete<T>(T request, string requestUri);
